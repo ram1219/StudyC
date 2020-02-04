@@ -4,6 +4,7 @@
 #include <io.h>
 #include <string.h>
 #include <Windows.h>
+#include <conio.h> 
 
 typedef struct _finddata_t FILE_SEARCH;
 
@@ -20,9 +21,16 @@ int main(void)
 	char* path = "D:\\document";
 	
 	
+	while (1)
+	{
+		if (_kbhit())
+		{
+			if (getch() == 'z') 
+				break;
+		}
 
-	GetfileList(path);
-
+		GetfileList(path);
+	}
 
 
 	return EXIT_SUCCESS;
@@ -39,43 +47,41 @@ void GetfileList(char* path) {
 
 	struct File_ fi;
 
-	while (1) {
 
-		sprintf_s(search_Path, 100, "%s\\*.*", path);
 
-		if ((h_file = _findfirst(search_Path, &file_search)) == -1L) {
-			printf("No files in current directory!\n");
-		}
-		else {
-			do {					
-				if (strcmp(strrchr(&file_search.name, '.'), ".txt") == 0) {
-					fi.fa = file_search.name;
-					i++;
+	sprintf_s(search_Path, 100, "%s\\*.*", path);
 
-					sprintf_s(search_Path, 100, "%s\\%s", path, fi.fa);
-					FILE* fp = fopen(search_Path, "rt");
+	if ((h_file = _findfirst(search_Path, &file_search)) == -1L) {
+		printf("No files in current directory!\n");
+	}
+	else {
+		do {					
+			if (strcmp(strrchr(&file_search.name, '.'), ".txt") == 0) {
+				fi.fa = file_search.name;
+				i++;
 
-					if (fp == NULL) {
-						return;
-					}
+				sprintf_s(search_Path, 100, "%s\\%s", path, fi.fa);
+				FILE* fp = fopen(search_Path, "rt");
 
-					while (c != EOF)
-					{
-						c = fgetc(fp);
-						putchar(c);
-					}
-
-					fclose(fp);
-					c = 0;
-					printf("\n\n");
-					Sleep(1000);
+				if (fp == NULL) {
+					return;
 				}
 
-			} while (_findnext(h_file, &file_search) == 0);
+				while (c != EOF)
+				{
+					c = fgetc(fp);
+					putchar(c);
+				}
 
-			_findclose(h_file);
-		
-		}	
+				fclose(fp);
+				c = 0;
+				printf("\n\n");
+				Sleep(1000);
+			}
+
+		} while (_findnext(h_file, &file_search) == 0);
+
+		_findclose(h_file);
 	}
 }
 
