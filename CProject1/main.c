@@ -25,14 +25,14 @@ void GetfileList(char* path) {
 
 	long h_file;
 
-	int icount = 0;
-	char *SaveName[100];
-	char* tmpName;
+	char tmpName[100];
+	char search_Path[100];
 
+	char c = 0;
+	int icount = 0;
 	int iBool = 0;
 
-	char search_Path[100];
-	char c = 0;
+	char* SaveName[100] = { 0, };
 	char* fa;
 
 	FILE_SEARCH file_search;
@@ -55,7 +55,7 @@ void GetfileList(char* path) {
 			do {
 
 				if (strcmp(strrchr(&file_search.name, '.'), ".txt") == 0) {	// txt파일만 골라내기
-					fa = file_search.name;							// 파일 이름 저장
+					fa = file_search.name;									// 파일 이름 저장
 
 					if (icount == 0) { 
 						SaveName[icount] = fa;
@@ -63,7 +63,7 @@ void GetfileList(char* path) {
 
 					for (int i = 0; i < icount; i++) {
 														
-						if (&SaveName[i] == fa) {
+						if (strcmp(*&SaveName[i], fa) == 0) {
 							iBool = 0;
 							break;
 						}
@@ -72,9 +72,9 @@ void GetfileList(char* path) {
 						}
 							
 					}
+
 					if (iBool == 1) {
 						SaveName[icount] = fa;
-						iBool = 0;
 					}
 
 					for (int i = 0; i <= icount; i++) {
