@@ -30,10 +30,21 @@ int main(void)
     printf("list all : ");
     current = head; 
     while (current != NULL) {
-        printf("%d  ", current->num);
+        printf("%5d", current->num);
         current = current->next;
     }
-    printf("\n");
+    printf("\n\n");
+
+    printf("b delete : ");
+    a.next = &c;
+    b.next = 0;                     // 생략가능
+
+    current = head;
+    while (current != NULL) {
+        printf("%5d", current->num);
+        current = current->next;
+    }
+    printf("\n\n");
 
 	system("pause");
 	return EXIT_SUCCESS;
