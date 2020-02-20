@@ -87,8 +87,6 @@ void Push_q(Queue* queue, Item item)
         current->next = node;
         // rear의 값을 이동
         queue->rear = current->next;
-        // rear를 front랑 연결하여 원형 큐로 만든다.
-        queue->rear->next = queue->front;
     }
     queue->len++;
 }
@@ -121,7 +119,6 @@ Item Pop_q(Queue* queue)
         Node* current = queue->front;
 
         queue->front = current->next;
-        queue->rear->next = queue->front;
         free(current);
     }
     queue->len--;
