@@ -100,34 +100,36 @@ Item peek_s(const Stack* stack)
 
 Item pop_s(Stack* stack)
 {
-    if (stack->top == NULL) {
-        printf("NOT POP\n");
-        return;
-    }
+    if (stack->top != NULL) {
 
-    Item item = stack->top->item;
-
-    if (stack->head == stack->top) {
-        stack->head = NULL;
-        stack->top == NULL;
-    }
-    else {
+        Item item = stack->top->item;
         Node* current = stack->head;
-        Node* pre = NULL;
 
-        while (current->next != NULL) {
-            pre = current;
-            current = current->next;
+        if (stack->head == stack->top) {
+            stack->head = NULL;
+            stack->top == NULL;
+        }
+        else {            
+            Node* pre = NULL;
+
+            while (current->next != NULL) {
+                pre = current;
+                current = current->next;
+            }
+
+            stack->top = pre;
+            pre->next = current->next;            
         }
 
-        stack->top = pre;
-        pre->next = current->next;
         free(current);
+        printf("\nPOP : %d\n", item);
+
+        return item;
     }
-
-    printf("\nPOP : %d\n", item);
-
-    return item;
+    else {
+        printf("NOT POP\n");
+        return;
+    }      
 }
 
 void Release_s(Stack* stack)
