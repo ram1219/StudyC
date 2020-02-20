@@ -24,11 +24,9 @@ struct _Stack {
 Stack* Create_s();
 void Release_s(Stack* stack);
 void Print_s(const Stack* stack);
-
 void Push_s(Stack* stack, Items items);
 int isFull_s(const Stack* stack);
 void Expand_s(Stack* stack);
-
 Items Peek_s(const Stack* stack);
 Items Pop_s(Stack* stack);
 int isEmpty_s(const Stack* stack);
@@ -37,23 +35,18 @@ int isEmpty_s(const Stack* stack);
 int main() 
 {
     Stack* stack = Create_s();
+    int inputS = 0;
 
-    Push_s(stack, 0);
-    Print_s(stack);
-    Push_s(stack, 10);
-    Print_s(stack);
-    Push_s(stack, 20);
-    Print_s(stack);
-
-    Items item = Peek_s(stack);
-    printf("peek => %d\n\n", item);
-
-    Pop_s(stack);
-    Print_s(stack);
-    Pop_s(stack);
-    Print_s(stack);
-
-    Release_s(stack);
+    printf("PUSH : ");
+    for (int i = 0; i < 4; i++) {
+        scanf("%d", &inputS);
+        Push_s(stack, inputS);
+    }
+    
+    for (int i = 0; i < 4; i++) {
+        printf("%d ", Pop_s(stack));
+    }
+    printf("\n");
 }
 
 // 스택공간 생성 및 초기화
